@@ -11,17 +11,27 @@
   </url>
 
   <url>
-    <loc>https://attach-logo.vercel.app/ko</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
+    <loc>https://attach-logo.vercel.app/en</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://attach-logo.vercel.app/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://attach-logo.vercel.app/en"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://attach-logo.vercel.app/zh-tw"/>
+  </url>
+
+  <url>
+    <loc>https://attach-logo.vercel.app/ko</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://attach-logo.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://attach-logo.vercel.app/en"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://attach-logo.vercel.app/zh-tw"/>
   </url>
 
   <url>
     <loc>https://attach-logo.vercel.app/zh-tw</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://attach-logo.vercel.app/zh-tw"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://attach-logo.vercel.app/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://attach-logo.vercel.app/en"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://attach-logo.vercel.app/zh-tw"/>
   </url>
 
 </urlset>
