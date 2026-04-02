@@ -1,42 +1,70 @@
-# sv
+# Attach Logo App 🖼️✨
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+브라우저 내장 Canvas API를 활용하여 해상도와 화질 저하 없이 원본 그대로 이미지에 워터마크나 로고를 추가할 수 있는, 극도로 빠르고 세련된 SvelteKit 5 기반 웹 애플리케이션입니다.
 
-## Creating a project
+## 주요 기능 🚀
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **손실 없는 고화질 보존**: 오프스크린(Off-screen) 캔버스를 로컬에서 직접 구동하여 원본 사진의 해상도와 선명함을 100% 보존합니다. 서버로 어떤 파일도 전송하지 않으므로 *100% 개인정보가 보호되고 서버 비용이 일절 발생하지 않습니다.*
+- **강력한 일괄 처리(Batch)**: 10장, 50장, 100장의 이미지를 한 번에 선택하고 다운로드하세요! 앱이 로고를 모든 이미지에 합성한 뒤, `JSZip`을 이용해 깔끔하게 `.zip` 압축 파일로 묶어 로컬 스토리지에 한 번에 다운로드 해줍니다.
+- **스마트한 로고 포지셔닝 시스템**:
+  - **드래그 모드 (Drag)**: 화면을 직접 클릭하고 끌어서 로고를 원하는 위치에 배치하세요. 정밀한 좌표 델타(Delta) 계산이 도입되어 마우스 이동량만큼 완벽하고 부드럽게 로고가 따라옵니다.
+  - **정중앙 배치 (Center)**: 버튼 한 번으로 원본 이미지의 정확한 정중앙에 로고를 고정시킵니다.
+  - **직접 입력 (Custom)**: 상하좌우를 기준으로 원하는 여백을 픽셀(px) 단위로 완벽하게 직접 기입할 수 있습니다.
+- **다국어 및 스마트 라우터 (i18n)**: 한국어(ko), 영어(en), 번체 중국어(zh-tw)가 기본 탑재되어 제공됩니다. 유저의 시스템 브라우저 헤더(`Accept-Language`)를 분석해 최적의 언어 주소로 매끄럽게 자동 연결합니다. 구조상 국기 아이콘 없이 대표 문자(A, 가, 繁)를 활용하여 세련된 언어 선택 모달 팝업을 제공합니다.
+- **SEO & PWA 완벽 지원**: 데스크탑과 모바일에서 네이티브 앱처럼 설치할 수 있는 PWA(Progressive Web App)를 지원하며, 검색 엔진 봇을 위한 언어별 `<link rel="alternate">` 태그가 코드 한줄 수정 없이 자동으로 생성되어 글로벌 SEO 노출에 매우 강력합니다.
 
-```sh
-# create a new project
-npx sv create my-app
+## 기술 스택 🛠️
+
+- **프레임워크**: [SvelteKit](https://kit.svelte.dev/) 및 Svelte 5 **Runes** 문법
+- **언어**: TypeScript (앱 전반에 걸친 엄격한 타입 검사 적용)
+- **주요 라이브러리**: `file-saver`, `jszip`
+- **PWA**: `vite-plugin-pwa`
+
+## 시작하기 🏁
+
+### 사전 준비
+
+동작시키려면 PC에 [Node.js](https://nodejs.org/)가 설치되어 있어야 합니다.
+
+### 설치 방법
+
+프로젝트 저장소를 클론하거나 패키지 폴더 안에서 터미널을 열고 아래 명령어를 통해 의존성 모듈을 설치해주세요:
+
+```bash
+npm install
 ```
 
-To recreate this project with the same configuration:
+### 로컬 실행 (개발 서버)
 
-```sh
-# recreate this project
-npx sv@0.13.1 create --template minimal --types jsdoc --no-install ./
-```
+HMR이 적용된 로컬 핫 리로딩 개발 서버를 구동합니다.
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
+```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+브라우저에서 `http://localhost:5173` 으로 접속해 동작을 확인하세요. 첫 접속 시 내 시스템의 언어 설정에 따라 (예: `http://localhost:5173/ko`) 지정된 경로로 바로 진입하게 됩니다.
 
-To create a production version of your app:
+### 프로덕션 빌드
 
-```sh
+실제 서비스와 호스팅을 위한 최적화 배포용 파일을 빌드합니다:
+
+```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+빌드 결과물은 `.svelte-kit/output` 폴더에 생성됩니다. 추후 Node.js 서버 없이 정적 호스팅 사이트(Vercel, GitHub Pages, Netlify 등)에 올리실 경우 프로젝트에 `@sveltejs/adapter-static` 어댑터를 교체하여 사용하시면 편리합니다.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## 새로운 언어 추가 방법 (확장성) 🌐
+
+새로운 언어(예: 일본어 `ja`)를 시스템에 추가하는 방법은 코드를 뒤질 필요 없이 매우 간단합니다!
+1. `src/lib/locales/ko.ts` 파일을 복사해 `src/lib/locales/ja.ts`를 만들고 안에 포함된 문장을 일본어로 번역합니다.
+2. `src/lib/i18n.svelte.ts` 글로벌 상태 파일을 열고 아래 3가지를 추가합니다:
+   - `SupportedLangs` 타입 목록 끝에 `'ja'` 를 추가합니다.
+   - `dictionaries` 매핑 객체 안에 `'ja': ja` 를 추가합니다.
+   - `languageMetadata` 메타데이터 객체 안에 `'ja': { char: 'あ', name: '日本語 (JA)' }` 를 한 줄 추가합니다.
+
+세팅이 끝났습니다! 위 과정만 거치시면 시스템이 이를 자동 감지하여 언어 선택 모달, 서버 접속 자동자 라우터 분석, HTML SEO 메타데이터 삽입을 한 번에 모두 알아서 세팅해줍니다.
+
+---
+
+*개인정보 유출의 걱정 없이 브라우저 단에서 빠르고 완벽한 화질로 고품질 브랜딩 콘텐츠를 만들 수 있도록 설계되었습니다!*
