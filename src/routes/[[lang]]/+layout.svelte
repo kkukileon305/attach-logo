@@ -2,6 +2,7 @@
 	import '../../app.css';
 	import { pwaInfo } from 'virtual:pwa-info';
     import { i18nState, supportedLangsList } from '$lib/i18n.svelte';
+    import { page } from '$app/stores';
 
 	let { children, data } = $props();
 
@@ -17,6 +18,12 @@
 <svelte:head>
 	<meta name="description" content={i18nState.t('app_desc')} />
 	<title>{i18nState.t('app_title')}</title>
+    
+    {#each supportedLangsList as langKey}
+        <link rel="alternate" hreflang={langKey} href="{$page.url.origin}/{langKey}" />
+    {/each}
+    <link rel="alternate" hreflang="x-default" href="{$page.url.origin}/" />
+
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 	<link rel="apple-touch-icon" href="/favicon.svg" />
 	{#if pwaInfo}
