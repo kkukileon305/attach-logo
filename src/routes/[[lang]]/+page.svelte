@@ -3,7 +3,12 @@
     import { processImage } from "$lib/imageProcessor";
     import JSZip from "jszip";
     import saveAs from "file-saver";
-    import { i18nState, languageMetadata, supportedLangsList, type SupportedLangs } from "$lib/i18n.svelte";
+    import {
+        i18nState,
+        languageMetadata,
+        supportedLangsList,
+        type SupportedLangs,
+    } from "$lib/i18n.svelte";
 
     let images = $state<File[]>([]);
     let currentPreviewIndex = $state(0);
@@ -292,12 +297,17 @@
             <h3>Select Language</h3>
             <div class="lang-options">
                 {#each supportedLangsList as langKey}
-                <button
-                    class="lang-btn {i18nState.locale === langKey ? 'active' : ''}"
-                    onclick={() => setLanguage(langKey)}
-                >
-                    <span class="lang-char">{languageMetadata[langKey].char}</span> {languageMetadata[langKey].name}
-                </button>
+                    <button
+                        class="lang-btn {i18nState.locale === langKey
+                            ? 'active'
+                            : ''}"
+                        onclick={() => setLanguage(langKey)}
+                    >
+                        <span class="lang-char"
+                            >{languageMetadata[langKey].char}</span
+                        >
+                        {languageMetadata[langKey].name}
+                    </button>
                 {/each}
             </div>
             <button class="close-btn" onclick={() => (isLangModalOpen = false)}
@@ -365,7 +375,7 @@
         flex-direction: column;
         gap: 20px;
     }
-    
+
     .stage {
         order: 1;
     }
@@ -461,6 +471,10 @@
         gap: 8px;
     }
 
+    .setting-row input[type="number"] {
+        width: 80px;
+    }
+
     select,
     input[type="number"] {
         padding: 8px;
@@ -500,11 +514,11 @@
         main {
             grid-template-columns: 1fr;
         }
-        
+
         .sidebar {
             order: 1;
         }
-        
+
         .stage {
             order: 2;
         }
