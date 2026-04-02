@@ -10,6 +10,7 @@
         supportedLangsList,
         type SupportedLangs,
     } from "$lib/i18n.svelte";
+    import { Download } from "lucide-svelte";
 
     let images = $state<File[]>([]);
     let currentPreviewIndex = $state(0);
@@ -126,7 +127,7 @@
                     onclick={installPwa}
                     title="Install App"
                 >
-                    ⬇️
+                    <Download />
                 </button>
             {/if}
             <button
