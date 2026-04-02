@@ -1,13 +1,13 @@
 <script lang="ts">
 	import '../../app.css';
 	import { pwaInfo } from 'virtual:pwa-info';
-    import { i18nState } from '$lib/i18n.svelte';
+    import { i18nState, supportedLangsList } from '$lib/i18n.svelte';
 
 	let { children, data } = $props();
 
     $effect(() => {
-        if (data.lang && (data.lang === 'en' || data.lang === 'ko')) {
-            i18nState.locale = data.lang;
+        if (data.lang && supportedLangsList.includes(data.lang as any)) {
+            i18nState.locale = data.lang as any;
             document.documentElement.lang = data.lang;
         }
     });

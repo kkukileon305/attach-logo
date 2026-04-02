@@ -3,7 +3,7 @@
     import { processImage } from "$lib/imageProcessor";
     import JSZip from "jszip";
     import saveAs from "file-saver";
-    import { i18nState } from "$lib/i18n.svelte";
+    import { i18nState, languageMetadata, supportedLangsList, type SupportedLangs } from "$lib/i18n.svelte";
 
     let images = $state<File[]>([]);
     let currentPreviewIndex = $state(0);
@@ -291,18 +291,14 @@
         <div class="modal-content" onclick={(e) => e.stopPropagation()}>
             <h3>Select Language</h3>
             <div class="lang-options">
+                {#each supportedLangsList as langKey}
                 <button
-                    class="lang-btn {i18nState.locale === 'en' ? 'active' : ''}"
-                    onclick={() => setLanguage("en")}
+                    class="lang-btn {i18nState.locale === langKey ? 'active' : ''}"
+                    onclick={() => setLanguage(langKey)}
                 >
-                    <span class="lang-char">A</span> English
+                    <span class="lang-char">{languageMetadata[langKey].char}</span> {languageMetadata[langKey].name}
                 </button>
-                <button
-                    class="lang-btn {i18nState.locale === 'ko' ? 'active' : ''}"
-                    onclick={() => setLanguage("ko")}
-                >
-                    <span class="lang-char">가</span> 한국어
-                </button>
+                {/each}
             </div>
             <button class="close-btn" onclick={() => (isLangModalOpen = false)}
                 >Close</button

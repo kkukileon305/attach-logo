@@ -20,5 +20,5 @@ export const en = {
     "download_all": "Download All ZIP",
     "processing": "Processing...",
     "empty_state": "No image selected",
-    "select_language": "Select Language",
+    "select_language": "Language",
 };

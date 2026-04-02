@@ -20,5 +20,5 @@ export const ko = {
     "download_all": "모두 다운로드 (ZIP)",
     "processing": "처리 중...",
     "empty_state": "선택된 이미지가 없습니다",
-    "select_language": "언어 선택",
+    "select_language": "언어",
 };
