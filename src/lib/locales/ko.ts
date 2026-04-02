@@ -1,5 +1,5 @@
 export const ko = {
-    "app_title": "로고 첨부하기",
+    "app_title": "로고 붙이기",
     "app_desc": "브라우저 내에서 안전하게 화질 손실 없이 이미지에 로고나 워터마크를 추가하세요.",
     "step_1": "1. 파일 업로드",
     "select_images": "이미지 선택",
