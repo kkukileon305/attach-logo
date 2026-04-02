@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import PreviewStage from "$lib/components/PreviewStage.svelte";
     import { processImage } from "$lib/imageProcessor";
     import JSZip from "jszip";
@@ -95,11 +96,39 @@
     function setLanguage(targetLang: string) {
         window.location.href = `/${targetLang}`;
     }
+
+    let deferredPrompt: any = $state(null);
+
+    onMount(() => {
+        window.addEventListener("beforeinstallprompt", (e) => {
+            console.log(123);
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+    });
+
+    async function installPwa() {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === "accepted") {
+            deferredPrompt = null;
+        }
+    }
 </script>
 
 <div class="layout">
     <header>
         <div class="header-top">
+            {#if deferredPrompt}
+                <button
+                    class="install-btn"
+                    onclick={installPwa}
+                    title="Install App"
+                >
+                    ⬇️
+                </button>
+            {/if}
             <button
                 class="lang-switcher"
                 onclick={() => (isLangModalOpen = true)}
@@ -327,6 +356,7 @@
     .header-top {
         display: flex;
         justify-content: flex-end;
+        gap: 12px;
         margin-bottom: 20px;
     }
 
@@ -339,6 +369,26 @@
         cursor: pointer;
         transition: all 0.2s ease;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .install-btn {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        padding: 8px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+
+    .install-btn:hover {
+        border-color: var(--primary);
+        box-shadow: 0 2px 4px rgba(14, 165, 233, 0.1);
+        transform: translateY(-1px);
     }
 
     .lang-switcher:hover {
