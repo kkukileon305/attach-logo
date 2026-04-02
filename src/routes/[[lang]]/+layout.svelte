@@ -3,12 +3,20 @@
 	import { pwaInfo } from 'virtual:pwa-info';
     import { i18nState, supportedLangsList } from '$lib/i18n.svelte';
     import { page } from '$app/stores';
+    import { untrack } from 'svelte';
 
 	let { children, data } = $props();
+
+    const initialLang = untrack(() => data.lang);
+    if (initialLang && supportedLangsList.includes(initialLang as any)) {
+        i18nState.locale = initialLang as any;
+    }
 
     $effect(() => {
         if (data.lang && supportedLangsList.includes(data.lang as any)) {
             i18nState.locale = data.lang as any;
+        }
+        if (data.lang) {
             document.documentElement.lang = data.lang;
         }
     });
