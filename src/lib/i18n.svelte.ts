@@ -1,19 +1,22 @@
 import { en } from './locales/en';
 import { ko } from './locales/ko';
 import { zhtw } from './locales/zh-tw';
+import { ja } from './locales/ja';
 
-export type SupportedLangs = 'en' | 'ko' | 'zh-tw';
+export type SupportedLangs = 'en' | 'ko' | 'zh-tw' | 'ja';
 
 const dictionaries: Record<SupportedLangs, Record<string, string>> = {
     'en': en,
     'ko': ko,
-    'zh-tw': zhtw
+    'zh-tw': zhtw,
+    'ja': ja,
 };
 
 export const languageMetadata: Record<SupportedLangs, { char: string, name: string }> = {
     'en': { char: 'A', name: 'English (EN)' },
     'ko': { char: '가', name: '한국어 (KO)' },
-    'zh-tw': { char: '繁', name: '繁體中文 (ZH-TW)' }
+    'zh-tw': { char: '繁', name: '繁體中文 (ZH-TW)' },
+    'ja': { char: '日', name: '日本語 (JA)' },
 };
 
 export const supportedLangsList = Object.keys(dictionaries) as SupportedLangs[];
