@@ -21,4 +21,5 @@ export const ko = {
     "processing": "처리 중...",
     "empty_state": "선택된 이미지가 없습니다",
     "select_language": "언어",
+    "recent_logos": "최근 사용한 로고",
 };

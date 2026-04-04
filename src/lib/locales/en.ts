@@ -21,4 +21,5 @@ export const en = {
     "processing": "Processing...",
     "empty_state": "No image selected",
     "select_language": "Language",
+    "recent_logos": "Recent Logos",
 };

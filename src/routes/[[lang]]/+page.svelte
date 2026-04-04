@@ -4,6 +4,7 @@
     import { processImage } from "$lib/imageProcessor";
     import JSZip from "jszip";
     import saveAs from "file-saver";
+    import { get, set } from "idb-keyval";
     import {
         i18nState,
         languageMetadata,
@@ -15,6 +16,7 @@
     let images = $state<File[]>([]);
     let currentPreviewIndex = $state(0);
     let logoFile = $state<File | undefined>(undefined);
+    let recentLogos = $state<File[]>([]);
     let logoScale = $state(0.2);
     let mode = $state("center"); // 'drag', 'center', 'custom'
     let position = $state({ x: 0.5, y: 0.5 });
@@ -26,15 +28,23 @@
     });
     let isProcessing = $state(false);
 
-    $effect(() => {
-        fetch("/logo.svg")
-            .then((res) => res.blob())
-            .then((blob) => {
-                logoFile = new File([blob], "logo.svg", {
-                    type: "image/svg+xml",
-                });
-            });
-    });
+    function addRecentLogo(newFile: File) {
+        const isSameFile = (f1: File, f2: File) =>
+            f1.name === f2.name &&
+            f1.type === f2.type &&
+            f1.size === f2.size &&
+            f1.lastModified === f2.lastModified;
+        recentLogos = [
+            newFile,
+            ...recentLogos.filter((f) => !isSameFile(f, newFile)),
+        ].slice(0, 5);
+        set("recentLogos", [...recentLogos]).catch(console.error);
+    }
+
+    function selectRecentLogo(logo: File) {
+        logoFile = logo;
+        addRecentLogo(logo);
+    }
 
     const currentImage = $derived(images[currentPreviewIndex]);
 
@@ -51,6 +61,7 @@
         const target = e.target as HTMLInputElement;
         if (target.files && target.files[0]) {
             logoFile = target.files[0];
+            addRecentLogo(logoFile);
         }
     }
 
@@ -100,7 +111,23 @@
 
     let deferredPrompt: any = $state(null);
 
-    onMount(() => {
+    onMount(async () => {
+        try {
+            const stored = await get<File[]>("recentLogos");
+            if (stored && stored.length > 0) {
+                recentLogos = stored;
+                logoFile = stored[0];
+            } else {
+                const res = await fetch("/logo.svg");
+                const blob = await res.blob();
+                logoFile = new File([blob], "logo.svg", {
+                    type: "image/svg+xml",
+                });
+            }
+        } catch (err) {
+            console.error("Failed to load recent logos", err);
+        }
+
         window.addEventListener("beforeinstallprompt", (e) => {
             console.log(123);
             e.preventDefault();
@@ -167,6 +194,27 @@
                         />
                     </label>
                 </div>
+
+                {#if recentLogos.length > 0}
+                    <div class="recent-logos">
+                        <h3>{i18nState.t("recent_logos")}</h3>
+                        <div class="logo-list-horizontal">
+                            {#each recentLogos as logo}
+                                <button
+                                    class="recent-logo-btn {logoFile === logo
+                                        ? 'active'
+                                        : ''}"
+                                    onclick={() => selectRecentLogo(logo)}
+                                    title={logo.name}
+                                >
+                                    {logo.name.length > 10
+                                        ? logo.name.substring(0, 10) + "..."
+                                        : logo.name}
+                                </button>
+                            {/each}
+                        </div>
+                    </div>
+                {/if}
 
                 {#if images.length > 0}
                     <div class="image-list">
@@ -441,6 +489,45 @@
     .icon {
         font-size: 24px;
         margin-bottom: 8px;
+    }
+
+    .recent-logos {
+        margin-bottom: 16px;
+    }
+
+    .recent-logos h3 {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .logo-list-horizontal {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .recent-logo-btn {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 6px 12px;
+        border-radius: 16px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: var(--text);
+    }
+
+    .recent-logo-btn:hover {
+        border-color: var(--primary);
+    }
+
+    .recent-logo-btn.active {
+        background: #e0f2fe;
+        border-color: var(--primary);
+        color: var(--primary);
+        font-weight: 500;
     }
 
     .image-list {

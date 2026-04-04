@@ -21,4 +21,5 @@ export const zhtw = {
     "processing": "處理中...",
     "empty_state": "沒有選擇的圖片",
     "select_language": "語言",
+    "recent_logos": "最近使用的徽標",
 };
