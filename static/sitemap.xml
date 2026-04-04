@@ -8,6 +8,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://attach-logo.vercel.app/en"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://attach-logo.vercel.app/zh-tw"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://attach-logo.vercel.app/ja"/>
   </url>
 
   <url>
@@ -16,6 +17,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://attach-logo.vercel.app/en"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://attach-logo.vercel.app/zh-tw"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://attach-logo.vercel.app/ja"/>
   </url>
 
   <url>
@@ -24,6 +26,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://attach-logo.vercel.app/en"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://attach-logo.vercel.app/zh-tw"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://attach-logo.vercel.app/ja"/>
   </url>
 
   <url>
@@ -32,6 +35,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://attach-logo.vercel.app/en"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://attach-logo.vercel.app/zh-tw"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://attach-logo.vercel.app/ja"/>
+  </url>
+
+  <url>
+    <loc>https://attach-logo.vercel.app/ja</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://attach-logo.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://attach-logo.vercel.app/en"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://attach-logo.vercel.app/ko"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://attach-logo.vercel.app/zh-tw"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://attach-logo.vercel.app/ja"/>
   </url>
 
 </urlset>
