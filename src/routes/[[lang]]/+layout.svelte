@@ -1,11 +1,14 @@
 <script lang="ts">
-	import '../../app.css';
-	import { pwaInfo } from 'virtual:pwa-info';
-    import { i18nState, supportedLangsList } from '$lib/i18n.svelte';
-    import { page } from '$app/stores';
-    import { untrack } from 'svelte';
+    import "../../app.css";
+    import { pwaInfo } from "virtual:pwa-info";
+    import { i18nState, supportedLangsList } from "$lib/i18n.svelte";
+    import { page } from "$app/stores";
+    import { untrack } from "svelte";
+    import { dev } from "$app/environment";
+    import { inject } from "@vercel/analytics";
+    import { onMount } from "svelte";
 
-	let { children, data } = $props();
+    let { children, data } = $props();
 
     const initialLang = untrack(() => data.lang);
     if (initialLang && supportedLangsList.includes(initialLang as any)) {
@@ -21,23 +24,30 @@
         }
     });
 
+    onMount(() => {
+        inject({ mode: dev ? "development" : "production" });
+    });
 </script>
 
 <svelte:head>
-	<meta name="description" content={i18nState.t('app_desc')} />
-	<title>{i18nState.t('app_title')}</title>
-    
+    <meta name="description" content={i18nState.t("app_desc")} />
+    <title>{i18nState.t("app_title")}</title>
+
     {#each supportedLangsList as langKey}
-        <link rel="alternate" hreflang={langKey} href="{$page.url.origin}/{langKey}" />
+        <link
+            rel="alternate"
+            hreflang={langKey}
+            href="{$page.url.origin}/{langKey}"
+        />
     {/each}
     <link rel="alternate" hreflang="x-default" href="{$page.url.origin}/" />
 
-	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-	<link rel="apple-touch-icon" href="/favicon.svg" />
-	{#if pwaInfo}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html pwaInfo.webManifest.linkTag}
-	{/if}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    {#if pwaInfo}
+        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+        {@html pwaInfo.webManifest.linkTag}
+    {/if}
 </svelte:head>
 
 {@render children()}
