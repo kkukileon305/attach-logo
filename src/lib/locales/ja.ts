@@ -21,4 +21,5 @@ export const ja = {
     "processing": "処理中...",
     "empty_state": "画像が選択されていません",
     "select_language": "言語",
+    "recent_logos": "最近使用したロゴ",
 };
